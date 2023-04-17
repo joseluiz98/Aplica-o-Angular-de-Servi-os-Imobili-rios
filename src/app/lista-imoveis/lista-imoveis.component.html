@@ -1,10 +1,28 @@
 <div class="row my-5">
-  <ng-container *ngFor="let imovel of imoveis | search : this.searchNome">
-    <div class="col-3 mt-16">
-      <app-imovel
-        (refreshList)="this.listaImoveis()"
-        [imovel]="imovel"
-      ></app-imovel>
+  <ng-template #lista>
+    <ng-container
+      #lista
+      *ngFor="let imovel of imoveis | search : this.searchNome"
+    >
+      <div class="col-3 mt-16">
+        <app-imovel
+          (refreshList)="this.listaImoveis()"
+          [imovel]="imovel"
+        ></app-imovel>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <div *ngIf="this.imoveis.length <= 0; else lista">
+    <h1 class="visually-hidden">Heroes examples</h1>
+
+    <div class="pt-5 text-center border-bottom">
+      <div class="col-lg-8 mx-auto">
+        <p class="lead mb-4">Comece cadastrando um anúncio!</p>
+        <p class="lead mb-4">
+          Basta clicar no botão "<b>Anunciar</b>" no canto suiperior direito!
+        </p>
+      </div>
     </div>
-  </ng-container>
+  </div>
 </div>

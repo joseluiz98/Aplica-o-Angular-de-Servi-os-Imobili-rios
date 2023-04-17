@@ -15,11 +15,13 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SearchPipe } from './pipes/search.pipe';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [SearchPipe],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
@@ -38,6 +40,7 @@ import { MatDividerModule } from '@angular/material/divider';
   exports: [
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     MatDialogModule,
     MatCardModule,
     MatFormFieldModule,
