@@ -2,10 +2,10 @@ import { Photo } from 'pexels';
 
 import { TipoImovel } from '../tipo-imovel';
 import { Endereco } from './endereco';
+import { Model } from './model';
 import { Proprietario } from './proprietario';
 
-export class Imovel {
-  public id: number = 0;
+export class Imovel extends Model {
   public nome: string = '';
   public tipo: TipoImovel = TipoImovel.APARTAMENTO;
   public valor: number = 0;

@@ -73,7 +73,7 @@ export class CadastrarImovelComponent {
     if (!!control$) this.subs$.push(control$);
   }
 
-  public onNoClick(submit?: boolean): void {
+  public onClose(submit?: boolean): void {
     if (!!submit) {
       // Insere a data do ankúncio (poderia ser feito no backend também, seria inclusive mais correto)
       this.form.get('dataAnuncio')?.patchValue(new Date().toISOString());

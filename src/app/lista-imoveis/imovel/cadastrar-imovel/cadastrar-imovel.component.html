@@ -1,12 +1,17 @@
 <div class="modal-container">
-  <h1 mat-dialog-title>Cadastrar Imóvel</h1>
+  <div class="d-flex justify-content-between aligm-items-center">
+    <h1 mat-dialog-title>Cadastrar Imóvel</h1>
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
   <form [formGroup]="form">
     <div mat-dialog-content>
       <p>Qual é o nome do proprietário?</p>
       <mat-form-field appearance="fill">
         <mat-label>Nome do Proprietário</mat-label>
-        <input matInput formControlName="proprietario" />
+        <input matInput cdkFocusInitial formControlName="proprietario" />
       </mat-form-field>
 
       <p>Qual é o nome do imóvel</p>
@@ -121,8 +126,8 @@
     </div>
   </form>
   <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="onNoClick(true)" [disabled]="!this.form.valid">
+    <button mat-button (click)="onClose()">Cancelar</button>
+    <button mat-button (click)="onClose(true)" [disabled]="!this.form.valid">
       Enviar
     </button>
   </div>

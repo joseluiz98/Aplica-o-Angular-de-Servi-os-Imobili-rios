@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { Model } from '../entidades/model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HttpBaseService<M> {
+export class HttpBaseService<M extends Model> {
   // protected API_ADDRESS ;
 
   constructor(
@@ -36,5 +37,17 @@ export class HttpBaseService<M> {
     return this.http
       .post(`${this.API_ADDRESS}/${this.endpoint}/`, value)
       .pipe(map((value) => value as M));
+  }
+
+  public update(value: M) {
+    return this.http
+      .put(`${this.API_ADDRESS}/${this.endpoint}/${value.id}`, value)
+      .pipe(map((value) => value as M));
+  }
+
+  public delete(id: number): Observable<void> {
+    return this.http
+      .delete(`${this.API_ADDRESS}/${this.endpoint}/${id.toString()}`)
+      .pipe(map(() => {}));
   }
 }

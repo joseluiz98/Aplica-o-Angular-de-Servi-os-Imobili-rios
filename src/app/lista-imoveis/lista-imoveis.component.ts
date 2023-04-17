@@ -1,54 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { Imovel } from '../shared/entidades/imovel';
 import { ImoveisService } from '../shared/services/imoveis.service';
 import { ProprietariosService } from '../shared/services/proprietarios.service';
-import { CadastrarImovelComponent } from './imovel/cadastrar-imovel/cadastrar-imovel.component';
 
 @Component({
   selector: 'app-lista-imoveis',
   templateUrl: './lista-imoveis.component.html',
   styleUrls: ['./lista-imoveis.component.scss'],
 })
-export class ListaImoveisComponent implements OnInit {
+export class ListaImoveisComponent implements OnInit, OnDestroy {
   public imoveis: Imovel[] = [];
+  private subs$: Subscription[] = [];
 
   constructor(
-    public dialog: MatDialog,
     private imoveisService: ImoveisService,
-    private proprietariosService: ProprietariosService,
-    private _snackBar: MatSnackBar
+    private proprietariosService: ProprietariosService
   ) {}
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CadastrarImovelComponent, {
-      data: { name: 'teste' },
-    });
+  public ngOnInit() {
+    this.listaImoveis();
 
-    dialogRef.afterClosed().subscribe((form) => {
-      if (!!form) {
-        this.imoveisService.create(form).subscribe(
-          (value) => {
-            debugger;
-
-            this._snackBar.open('Anúncio salvo com sucesso!!', 'Okay!', {
-              horizontalPosition: 'right',
-            });
-          },
-          () => {
-            this._snackBar.open('Dados inválidos!', 'Okay!', {
-              horizontalPosition: 'right',
-            });
-          }
-        );
-      }
-    });
+    // Exemplo de comunicaçkão via service
+    let escutaImovelSendoCriado$ = this.imoveisService
+      .imovelFoiCriado()
+      .subscribe(() => {
+        // Faz refresh da lista de imoveis quando um novo imóvel é cadastrado
+        this.listaImoveis();
+      });
   }
 
-  public ngOnInit() {
-    this.openDialog();
+  public listaImoveis(): void {
     this.imoveisService.get().subscribe((imoveis) => {
       this.imoveis = imoveis;
 
@@ -59,5 +42,9 @@ export class ListaImoveisComponent implements OnInit {
           .subscribe((proprietario) => (imovel.proprietario = proprietario));
       });
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.subs$.forEach((sub$) => sub$.unsubscribe());
   }
 }
