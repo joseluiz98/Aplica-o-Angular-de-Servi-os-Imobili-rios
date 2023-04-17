@@ -1,0 +1,65 @@
+<mat-card class="card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{ this.imovel.nome }}</mat-card-title>
+    <mat-card-subtitle>{{ this.imovel.proprietario.nome }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <ng-container *ngFor="let foto of this.imovel.fotos; let idx = index">
+        <div class="carousel-item" [ngClass]="{ active: idx === 0 }">
+          <img
+            mat-card-image
+            [src]="foto.src.portrait"
+            alt="Photo of a Shiba Inu"
+            class="d-block w-100"
+          />
+        </div>
+      </ng-container>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <mat-card-content>
+    <ng-container *ngIf="imovel.venda; else aluguel">
+      <p>Imóvel para <b>venda</b>!</p>
+    </ng-container>
+    <ng-template #aluguel>
+      <p>Imóvel para <b>aluguel</b>!</p>
+    </ng-template>
+    <p>Valor: {{ imovel.valor | currency : "BRL" }}</p>
+
+    <p>Tipo: {{ imovel.tipo }}</p>
+    <p *ngIf="imovel.condominio">
+      Valor de Condominio: {{ imovel.condominio | currency : "BRL" }}
+    </p>
+
+    <p>
+      Imóvel conta com <b>{{ imovel.quartos }}</b> quarto(s) e
+      <b>{{ imovel.banheiros }}</b> banheiro(s), e sua área construída é de
+      <b>{{ imovel.area }},²</b>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>

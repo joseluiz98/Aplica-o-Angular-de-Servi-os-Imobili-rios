@@ -1,0 +1,129 @@
+<div class="modal-container">
+  <h1 mat-dialog-title>Cadastrar Imóvel</h1>
+
+  <form [formGroup]="form">
+    <div mat-dialog-content>
+      <p>Qual é o nome do proprietário?</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Nome do Proprietário</mat-label>
+        <input matInput formControlName="proprietario" />
+      </mat-form-field>
+
+      <p>Qual é o nome do imóvel</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Nome do Imóvel</mat-label>
+        <input matInput formControlName="nome" />
+      </mat-form-field>
+
+      <mat-label>Qual é o tipo do imóvel</mat-label>
+      <mat-radio-group formControlName="tipo">
+        <mat-radio-button value="apartamento">Apartamento</mat-radio-button>
+        <mat-radio-button value="casa">Casa</mat-radio-button>
+      </mat-radio-group>
+
+      <br />
+
+      <mat-label>Está mobiliado?</mat-label>
+      <mat-radio-group formControlName="mobiliado">
+        <mat-radio-button value="true">Sim</mat-radio-button>
+        <mat-radio-button value="false">Não</mat-radio-button>
+      </mat-radio-group>
+
+      <br />
+
+      <mat-label>Qual é o valor do condominio?</mat-label>
+      <mat-form-field appearance="fill">
+        <mat-label>Número de banheiros</mat-label>
+        <input type="number" matInput formControlName="condominio" />
+      </mat-form-field>
+
+      <mat-label>Selecione o tipo de contrato</mat-label>
+      <mat-radio-group (change)="escolheTipoContrato($event.value)">
+        <mat-radio-button value="venda">Venda</mat-radio-button>
+        <mat-radio-button value="aluguel">Aluguel</mat-radio-button>
+      </mat-radio-group>
+
+      <p>Qual será o valor??</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Valor</mat-label>
+        <input type="number" matInput formControlName="valor" />
+      </mat-form-field>
+
+      <p>Qual a área do imóvel???</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Valor</mat-label>
+        <input type="number" matInput formControlName="area" />
+      </mat-form-field>
+
+      <p>Quantos quartos o imóvel possui?</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Número de quartos</mat-label>
+        <input type="number" matInput formControlName="quartos" />
+      </mat-form-field>
+
+      <p>Quantos banheiros o imóvel possui?</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Número de banheiros</mat-label>
+        <input type="number" matInput formControlName="banheiros" />
+      </mat-form-field>
+
+      <div formGroupName="endereco">
+        <h1>Endereço</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>CEP</mat-label>
+          <input
+            formControlName="cep"
+            matInput
+            [textMask]="{ mask: cepMask }"
+          />
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Search"
+            (click)="buscaCep()"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Logradouro</mat-label>
+          <input formControlName="rua" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Número</mat-label>
+          <input formControlName="numero" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Bairro</mat-label>
+          <input formControlName="bairro" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Cidade</mat-label>
+          <input formControlName="cidade" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>UF</mat-label>
+          <mat-select formControlName="uf" [compareWith]="compareFn">
+            <mat-option
+              *ngFor="let estado of estados | keyvalue"
+              [value]="estado.key"
+            >
+              {{ estado.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="onNoClick(true)" [disabled]="!this.form.valid">
+      Enviar
+    </button>
+  </div>
+</div>
