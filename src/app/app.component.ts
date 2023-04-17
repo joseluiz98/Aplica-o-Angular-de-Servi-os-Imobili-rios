@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { debounceTime } from 'rxjs';
 
 import { CadastrarImovelComponent } from './lista-imoveis/imovel/cadastrar-imovel/cadastrar-imovel.component';
 import { Proprietario } from './shared/entidades/proprietario';
@@ -13,7 +14,7 @@ import { ProprietariosService } from './shared/services/proprietarios.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'jose-imoveis';
+  private search = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
@@ -22,11 +23,17 @@ export class AppComponent {
     private _snackBar: MatSnackBar
   ) {}
 
+  public ngOnInit(): void {
+    this.search.pipe(debounceTime(500)).subscribe((value: string) => {
+      this.imoveisService.notificaBuscaPorImovel(value);
+    });
+  }
+
   public anunciar(): void {
     this.openDialog();
   }
 
-  openDialog(): void {
+  public openDialog(): void {
     const dialogRef = this.dialog.open(CadastrarImovelComponent, {});
 
     dialogRef.afterClosed().subscribe((imovel) => {
@@ -62,5 +69,9 @@ export class AppComponent {
         );
       }
     });
+  }
+
+  public busca(value: any): void {
+    this.search.emit(value);
   }
 }

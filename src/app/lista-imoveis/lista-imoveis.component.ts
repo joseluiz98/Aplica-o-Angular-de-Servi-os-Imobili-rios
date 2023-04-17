@@ -13,6 +13,7 @@ import { ProprietariosService } from '../shared/services/proprietarios.service';
 export class ListaImoveisComponent implements OnInit, OnDestroy {
   public imoveis: Imovel[] = [];
   private subs$: Subscription[] = [];
+  public searchNome: string = '';
 
   constructor(
     private imoveisService: ImoveisService,
@@ -21,7 +22,11 @@ export class ListaImoveisComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.listaImoveis();
+    this.escutaCriacaoDeImovel();
+    this.escutaBuscaPorImovel();
+  }
 
+  private escutaCriacaoDeImovel() {
     // Exemplo de comunicaçkão via service
     let escutaImovelSendoCriado$ = this.imoveisService
       .imovelFoiCriado()
@@ -29,6 +34,20 @@ export class ListaImoveisComponent implements OnInit, OnDestroy {
         // Faz refresh da lista de imoveis quando um novo imóvel é cadastrado
         this.listaImoveis();
       });
+
+    this.subs$.push(escutaImovelSendoCriado$);
+  }
+
+  private escutaBuscaPorImovel() {
+    // Exemplo de comunicaçkão via service
+    let escutaImovelSendoBuscado$ = this.imoveisService
+      .buscaFoiDisparada()
+      .subscribe((nomeDoImovel: string) => {
+        // Faz refresh da lista de imoveis quando um novo imóvel é cadastrado
+        this.searchNome = nomeDoImovel;
+      });
+
+    this.subs$.push(escutaImovelSendoBuscado$);
   }
 
   public listaImoveis(): void {

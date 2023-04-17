@@ -38,6 +38,29 @@ export class ImovelComponent implements OnChanges {
     }
   }
 
+  public alugarOuComprar(imovel: Imovel) {
+    // Remove o imóvel
+    this.imoveisService.delete(imovel.id).subscribe(
+      () => {
+        // Remove o proprietario
+        this.proprietariosService
+          .delete(imovel.proprietarioId)
+          .subscribe(() => {
+            // Conclui o processo de deleção
+            this._snackBar.open('Imóvel adquirido com sucesso!!', 'Okay!', {
+              horizontalPosition: 'right',
+            });
+            this.refreshList.emit();
+          });
+      },
+      () => {
+        this._snackBar.open('Houve um erro, tente novamente', 'Okay!', {
+          horizontalPosition: 'right',
+        });
+      }
+    );
+  }
+
   public remove(imovel: Imovel) {
     // Remove o imóvel
     this.imoveisService.delete(imovel.id).subscribe(

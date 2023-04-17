@@ -13,6 +13,9 @@ export class ImoveisService extends HttpBaseService<Imovel> {
   private imovelCriadoSubject = new Subject<Imovel>();
   private imovelCriado$ = this.imovelCriadoSubject.asObservable();
 
+  private buscaImovelSubject = new Subject<string>();
+  private busca$ = this.buscaImovelSubject.asObservable();
+
   constructor(public override http: HttpClient) {
     super(http, 'imovel');
   }
@@ -23,5 +26,13 @@ export class ImoveisService extends HttpBaseService<Imovel> {
 
   public imovelFoiCriado(): Observable<Imovel> {
     return this.imovelCriado$;
+  }
+
+  public notificaBuscaPorImovel(value: string) {
+    this.buscaImovelSubject.next(value);
+  }
+
+  public buscaFoiDisparada(): Observable<string> {
+    return this.busca$;
   }
 }

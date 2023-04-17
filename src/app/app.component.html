@@ -27,18 +27,28 @@
       </ul>
       <div class="me-3">
         <button mat-flat-button color="primary" (click)="anunciar()">
-          Anunciar
+          ANUNCIAR
         </button>
       </div>
-      <form class="d-flex align-items-center" role="search">
+      <form
+        class="d-flex align-items-center"
+        role="search"
+        (submit)="busca(searchInput.value)"
+      >
         <input
+          #searchInput
           class="form-control me-2"
           type="search"
-          placeholder="Search"
-          aria-label="Search"
+          placeholder="Pesquise por nome"
+          aria-label="Pesquise por nome"
+          (keyup)="busca(searchInput.value)"
         />
-        <button class="btn btn-outline-success btn-outline-light" type="submit">
-          Search
+        <button
+          type="submit"
+          class="btn btn-outline-success btn-outline-light"
+          type="submit"
+        >
+          BUSCAR
         </button>
       </form>
     </div>

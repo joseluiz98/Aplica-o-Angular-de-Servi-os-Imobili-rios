@@ -1,7 +1,12 @@
-<mat-card class="card">
-  <mat-card-header>
+<mat-card class="card my-3">
+  <mat-card-header class="header">
     <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{ this.imovel.nome }}</mat-card-title>
+    <mat-card-title
+      #tooltip="matTooltip"
+      [matTooltip]="this.imovel.nome"
+      matTooltipPosition="below"
+      >{{ this.imovel.nome }}</mat-card-title
+    >
     <mat-card-subtitle *ngIf="this.imovel.proprietario">
       {{ this.imovel.proprietario.nome }}</mat-card-subtitle
     >
@@ -9,7 +14,7 @@
 
   <div
     [id]="'carousel' + this.imovel.id"
-    class="carousel slide"
+    class="mt-2 carousel slide"
     data-bs-ride="carousel"
   >
     <div class="carousel-inner">
@@ -63,10 +68,21 @@
       <b>{{ imovel.banheiros }}</b> banheiro(s), e sua área construída é de
       <b>{{ imovel.area }}m²</b>
     </p>
+    <mat-divider></mat-divider>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-flat-button color="warn" (click)="remove(imovel)">
+    <ng-container *ngIf="this.imovel.aluguel; else comprar">
+      <button (click)="alugarOuComprar(imovel)" mat-flat-button color="primary">
+        ALUGAR!
+      </button>
+    </ng-container>
+    <ng-template #comprar>
+      <button (click)="alugarOuComprar(imovel)" mat-flat-button color="primary">
+        COMPRAR!
+      </button>
+    </ng-template>
+
+    <button class="ms-2" mat-flat-button color="warn" (click)="remove(imovel)">
       REMOVER
     </button>
   </mat-card-actions>
