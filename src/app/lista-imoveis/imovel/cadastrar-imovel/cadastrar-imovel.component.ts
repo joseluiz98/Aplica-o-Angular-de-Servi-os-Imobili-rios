@@ -23,6 +23,7 @@ import { BuscaCepService } from '../../../shared/services/busca-cep.service';
 export class CadastrarImovelComponent {
   public form: FormGroup = new FormGroup('');
   public cepMask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+
   private subs$: Subscription[] = [];
   public estados = Estados;
 
@@ -62,7 +63,9 @@ export class CadastrarImovelComponent {
 
     let control$ = this.form
       ?.get('endereco.cep')
-      ?.valueChanges.pipe(filter((value) => !value.includes('_')))
+      ?.valueChanges.pipe(
+        filter((value) => value !== '' && !value.includes('_'))
+      )
       .subscribe((value) => this.buscaCep());
 
     this.form.valueChanges.subscribe(() => {
