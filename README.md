@@ -7,6 +7,8 @@ deste app as tecnolgoias: Angular, BOotstrap, SASS, Angular Material, entre outr
 
 Utilizamos a API fornecida pela Brusnker para integração
 
+Link para a api: https://github.com/matheusbrunsker/api-fake
+
 ## Development server
 
 Para executar a aplicação basta rodar `npm install` e em seguida `npm start`. A aplicação ficará disponível no endereço `http://localhost:4200/`.
