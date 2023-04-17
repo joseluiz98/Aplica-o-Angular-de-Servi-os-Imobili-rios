@@ -32,7 +32,7 @@ export class ImovelComponent implements OnChanges {
   // Busca a foto exemplo do imóvel em API de terceiros
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['imovel'] && changes['imovel'].currentValue.id) {
-      this.photosService.getImages().subscribe((photos) => {
+      this.photosService.getImages(this.imovel.id).subscribe((photos) => {
         this.imovel.fotos = photos;
       });
     }

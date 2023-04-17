@@ -17,12 +17,13 @@ const query = 'Nature';
 export class PhotosService {
   constructor() {}
 
-  public getImages(): Observable<Photo[]> {
+  public getImages(page: number): Observable<Photo[]> {
     return from(
       client.photos.search({
         query: 'apartamento',
         locale: 'pt-BR',
         per_page: 5,
+        page: page,
       })
     ).pipe(map((response) => (response as PhotosWithTotalResults).photos));
   }
