@@ -1,6 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 
 import { CadastrarImovelComponent } from './lista-imoveis/imovel/cadastrar-imovel/cadastrar-imovel.component';
@@ -20,6 +21,7 @@ export class AppComponent {
     public dialog: MatDialog,
     private imoveisService: ImoveisService,
     private proprietariosService: ProprietariosService,
+    private router: Router,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -56,6 +58,8 @@ export class AppComponent {
                 // Vincula o proprietario ao imovel
                 imovelCriado.proprietarioId = proprietarioCriado.id;
                 this.imoveisService.update(imovelCriado).subscribe(() => {
+                  this.router.navigate(['imoveis', 'lista']);
+
                   // Finaliza o processo de criação
                   this.imoveisService.notificaImovelCriado(imovelCriado);
                 });

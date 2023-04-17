@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ImoveisModule } from './lista-imoveis/imoveis.module';
 import { SharedModule } from './shared/shared.module';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, WelcomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
